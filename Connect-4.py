@@ -36,7 +36,7 @@ for char in words:
     sys.stdout.write(char)
     sys.stdout.flush()
 print ""
-words = "Welcome to my Connect-4 Game!Do you know the rules to the game?(Y/N)"
+words = "Welcome to my Connect-4 Game! Do you know the rules to the game?(Y/N)"
 #Experimental Typing
 for char in words:
     sleep(0.05)
@@ -61,24 +61,33 @@ while(t<=42):
                 break  
     k=0  
     while(k==0):
-        c=int(raw_input("Choose your column, mate "+str(t%2 + 1)+ "!(1-7): "))
-        if c<=0 or c>=8:
-            print "Choose between 1-7!"
-        elif not checkcolumn(c):
-            print "Column full,try another column!"
+        c=raw_input("Choose your column, mate "+str(t%2 + 1)+ "!(1-7): ")
+        if c not in "0123456789" or c=="":
+            print "Choose an integer between 1-7!"
+        
         else:
-            board.reverse()
-            for x in board:
-                if x[c-1]=='.':
-                    if t%2==0:
-                        x[c-1]='X'
-                        break
-                    else:
-                        x[c-1]='O'
-                        break  
-            board.reverse()                       
-            k=1   
+            c=int(c)
+            if c<=0 or c>=8:
+                print "Choose between 1-7!"
+            elif not checkcolumn(c):
+                print "Column full,try another column!"
+            else:
+                board.reverse()
+                for x in board:
+                    if x[c-1]=='.':
+                        if t%2==0:
+                            x[c-1]='X'
+                            break
+                        else:
+                            x[c-1]='O'
+                            break  
+                board.reverse()                       
+                k=1   
     if checkwin(t%2):
+        for row in board:
+            for x in row:
+                sys.stdout.write(x+" ")
+            print ""
         break
     t=t+1;
 
